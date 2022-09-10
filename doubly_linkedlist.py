@@ -49,11 +49,64 @@ class DoublyLinkedList:
             temp.next = newNode
             newNode.prev = temp
 
+    def traverseDLL(self):
+        if self.head is None:
+            return
+        tempNode = self.head
+        while tempNode:
+            print(tempNode.value)
+            tempNode = tempNode.next
+
+    def reverseTraversalDLL(self):
+        if self.head is None:
+            return
+        tempNode = self.tail
+        while tempNode:
+            print(tempNode.value)
+            tempNode = tempNode.prev
+
+    def searchDLL(self, nodeValue):
+        if self.head is None:
+            return False
+        tempNode = self.head
+        while tempNode:
+            if tempNode.value == nodeValue:
+                return True
+            tempNode = tempNode.next
+        return False
+
+    def deleteNode(self, location):
+        if self.head is None:
+            return
+        if self.head == self.tail:
+            self.head = None
+            self.tail = None
+        if location == 0:
+            nextNode = self.head.next
+            nextNode.prev = None
+            self.head = nextNode
+        elif location == -1:
+            self.tail.prev.next = None
+            self.tail = self.tail.prev
+        else:
+            index = 0
+            curNode = self.head
+            while index < location - 1:
+                index += 1
+                curNode = curNode.next
+            curNode.next.next.prev = curNode  # missing part
+            curNode.next = curNode.next.next
+            curNode.next.prev = None
+
 
 doublyLL = DoublyLinkedList()
 doublyLL.createDLL(1)
 doublyLL.insertNode(0, -1)
 doublyLL.insertNode(0, 0)
 doublyLL.insertNode(1, 1)
+doublyLL.insertNode(2, 1)
+doublyLL.deleteNode(-1)
+doublyLL.deleteNode(-2)
+doublyLL.reverseTraversalDLL()
 
 print([node.value for node in doublyLL])
